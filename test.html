@@ -1,0 +1,33 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>League of Clickers</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+
+	<script src="lib/rivets.js" text="type/javascript"></script>
+	<script src="lib/jquery.js" text="type/javascript"></script>
+
+	<script src="src/game.js" text="type/javascript"></script>
+
+	<script text="type/javascript">
+
+$(document).ready(initialize);
+
+	</script>
+
+
+</head>
+<body class="container-fluid">
+
+<section id="auction">
+  <h3>{ auction.product.name }</h3>
+  <p>Current bid: { auction.currentBid | money }</p>
+
+  <aside rv-if="auction.timeLeft | lt 120">
+    Hurry up! There is { auction.timeLeft | time } left.
+  </aside>
+</section>
+
+	
+</body>
+</html>

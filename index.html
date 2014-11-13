@@ -1,0 +1,147 @@
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>League of Clickers</title>
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+	
+	
+	<script src="quick-function.js" text="type/javascript"></script>
+	<script src="lib/underscore.min.js" text="type/javascript"></script>
+	<script src="lib/jquery.js" text="type/javascript"></script>
+	<script src="lib/jquery.cookie.js" text="type/javascript"></script>
+	<script src="lib/rivets.js" text="type/javascript"></script>
+	<script src="lib/bootstrap/js/bootstrap.js" text="type/javascript"></script>
+	<script src="lib/fastclick.js" text="type/javascript"></script>
+	
+	<script src="src/game.js" text="type/javascript"></script>
+	<script src="src/savefile.js" text="type/javascript"></script>
+
+	<link  href="lib/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link  href="lib/bootstrap/css/bootstrap.override.css" rel="stylesheet">
+	<link  href="styles.css" rel="stylesheet">
+
+	<script text="type/javascript">
+
+$(document).ready(initialize);
+
+window.addEventListener('load', function() {
+    FastClick.attach(document.body);
+}, false);
+
+	</script>
+
+</head>
+<body class="bindto-player container-fluid" ng-app>
+
+<!-- Modal -->
+<div class="modal fade" id="saveLoadModal" tabindex="-1" role="dialog" aria-labelledby="saveLoadModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="saveLoadModalLabel">Save/Load via Text</h4>
+			</div>
+			<div class="modal-body">
+				<label>To save, simply copy the following text and save it as a text file on your computer.</label>
+				<textarea id="saveTextData" style="width: 100%; height: 10em; font-size: 1em;"></textarea>
+				<button id="selectSaveTextData" type="button" class="btn btn-default">Select All Text</button>
+				<hr>
+				<label>To load, paste your text file into this block, then click "Load Text Data".</label>
+				<textarea id="loadTextData" style="width: 100%; height: 10em; font-size: 1em;"></textarea>
+				<div id="loadTextDataFailedAlert" class="alert alert-danger hidden">We had trouble loading your text data. Please make sure your data is valid and try again!</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id="loadTextSaveData" type="button" class="btn btn-primary">Load Text Data</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<button type="button" id="resetGame" class="btn btn-default color-coral pull-left">Reset Game</button>
+<button type="button" id="saveGameTextExport" class="btn btn-default color-food pull-left" data-toggle="modal" data-target="#saveLoadModal">Save/Load via Text</button>
+
+<br>
+
+<div id="player">
+	<h3>{ player.money | money}</h3>
+	<h4>{ player.workersUsed | number} / { player.workers | number}</h4>
+</div>
+<section id="auction">
+  <h3>{ auction.product.name }</h3>
+  <p>Current bid: { auction.currentBid | money }</p>
+
+  <aside rv-if="auction.timeLeft | lt 120">
+    Hurry up! There is { auction.timeLeft | time } left.
+  </aside>
+</section>
+
+<div>
+
+<!-- Modal -->
+<div class="modal fade" id="saveLoadModal" tabindex="-1" role="dialog" aria-labelledby="saveLoadModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+				<h4 class="modal-title" id="saveLoadModalLabel">Save/Load via Text</h4>
+			</div>
+			<div class="modal-body">
+				<label>To save, simply copy the following text and save it as a text file on your computer.</label>
+				<textarea id="saveTextData" style="width: 100%; height: 10em; font-size: 1em;"></textarea>
+				<button id="selectSaveTextData" type="button" class="btn btn-default">Select All Text</button>
+				<hr>
+				<label>To load, paste your text file into this block, then click "Load Text Data".</label>
+				<textarea id="loadTextData" style="width: 100%; height: 10em; font-size: 1em;"></textarea>
+				<div id="loadTextDataFailedAlert" class="alert alert-danger hidden">We had trouble loading your text data. Please make sure your data is valid and try again!</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button id="loadTextSaveData" type="button" class="btn btn-primary">Load Text Data</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row row-margin">
+	<div class="col-md-3">
+		<a href="http://www.reddit.com/r/polatrite" style="text-decoration: underline;">Subreddit</a> | <a href="http://www.reddit.com/r/incremental_games" style="text-decoration: underline;">Incremental Games</a> | <a href="http://www.github.com/Polatrite/progress-bars" style="text-decoration: underline;">Source</a>
+		<br>
+		<label id="lblVersion" rv-html"player.name">{ player.name }</label>
+		<div id="herpderp">
+			<h1 rv-text="player.name">lolabel</h1>
+		</div>
+	</div>
+</div>
+<div class="row row-margin">
+	<div ng-repeat="champion in champions" class="col-sm-4"></div>
+</div>
+<div class="row row-margin">
+	<div class="col-md-8"></div>
+	<div class="col-md-2">
+		<button type="button" id="resetGame" class="btn btn-default color-coral pull-left">Reset Game</button>
+		<button type="button" id="saveGame" class="btn btn-default color-food pull-left hidden">Save Game</button>
+		<button type="button" id="loadGame" class="btn btn-default color-mountain pull-left hidden">Load Game</button>
+		<button type="button" id="saveGameTextExport" class="btn btn-default color-food pull-left" data-toggle="modal" data-target="#saveLoadModal">Save/Load via Text</button>
+	</div>
+	<div class="col-md-2">
+		<button type="button" id="workMode" class="btn btn-default color-stone pull-left">Work Mode</button>
+		<button type="button" id="nightMode" class="btn btn-default color-stone pull-left">Night Mode</button>
+		<button type="button" id="superDevMode" class="btn btn-default color-stone pull-left hidden">Top Secret Dev Mode</button>
+	</div>
+</div>
+
+
+
+</div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56485884-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
